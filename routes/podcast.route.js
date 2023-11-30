@@ -6,6 +6,7 @@ const {
   getPodcast,
   addPodcast,
   updatePodcast,
+  deletePodcast
 } = require("../controller/podcast.controller");
 
 podcastRouter.route("/get").get(verifyToken, getPodcast);
@@ -24,6 +25,7 @@ podcastRouter
   );
 
 podcastRouter.route("/update/:id").patch(verifyToken, updatePodcast);
+podcastRouter.route("/delete/:id").delete(verifyToken, deletePodcast);
 
 module.exports = {
   podcastRouter,

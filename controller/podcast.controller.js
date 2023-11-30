@@ -11,6 +11,7 @@ exports.getPodcast = asyncHandler(async (req, res, next) => {
   const skipDocs = (page - 1) * limit;
 
   const podcast = await PodcastModel.find({ projectId, userId })
+    .sort({ createdAt: -1 })
     .skip(skipDocs)
     .limit(limit);
 
@@ -78,6 +79,22 @@ exports.updatePodcast = asyncHandler(async (req, res, next) => {
     message: "Successfully updated",
     statusCode: 200,
     data: updatedPodcast,
+  };
+  return res.status(200).json(response);
+});
+
+exports.deletePodcast = asyncHandler(async (req, res, next) => {
+  const podcastId = req.params.id;
+
+  const deletePodcast = await PodcastModel.findByIdAndDelete(podcastId, {
+    new: true,
+  });
+  // send response
+  const response = {
+    status: "success",
+    message: "Successfully deleted",
+    statusCode: 200,
+    data: deletePodcast,
   };
   return res.status(200).json(response);
 });

@@ -2,6 +2,7 @@ const authRouter = require("express").Router();
 const { body } = require("express-validator");
 const middleware = require("../middleware/ValidationError.middleware");
 const auth = require("../controller/auth.controller");
+const { verifyToken } = require("../middleware/VerifyToken.middleware");
 
 authRouter.route("/login").post(
   [
@@ -26,6 +27,7 @@ authRouter.route("/login").post(
   middleware.validationError,
   auth.login
 );
+authRouter.route("/update").patch(verifyToken, auth.updateUser);
 module.exports = {
   authRouter,
 };

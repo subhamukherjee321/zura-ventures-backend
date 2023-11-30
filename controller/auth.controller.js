@@ -70,3 +70,20 @@ exports.login = asyncHandler(async (req, res, next) => {
   };
   return res.status(200).json(response);
 });
+
+exports.updateUser = asyncHandler(async (req, res, next) => {
+  const userId = req.userID;
+  const {username} = req.body;
+
+  const updateUser = await AuthModel.findByIdAndUpdate(userId, {username}, {
+    new: true,
+  });
+  // send response
+  const response = {
+    status: "success",
+    message: "Successfully updated",
+    statusCode: 200,
+    data: updateUser,
+  };
+  return res.status(200).json(response);
+});
